@@ -72,7 +72,7 @@ button {
 #no {
     background: #e74c3c;
     color: white;
-    position: absolute;
+    position: fixed;
 }
 
 #no:hover {

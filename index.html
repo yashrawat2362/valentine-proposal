@@ -71,8 +71,9 @@
         #no {
             background-color: #e74c3c;
             color: white;
-            position: absolute;
-        }
+            position: fixed;
+            }
+
     </style>
 </head>
 
@@ -91,39 +92,39 @@
     </div>
 
     <script>
-        function sayYes() {
-            document.body.innerHTML = `
-                <div style="
-                    min-height:100vh;
-                    display:flex;
-                    justify-content:center;
-                    align-items:center;
-                    flex-direction:column;
-                    background:linear-gradient(135deg,#ff4d6d,#ff758f);
-                    color:white;
-                    font-family:Arial;
-                    text-align:center;
-                    padding:20px;
-                ">
-                    <h1>YAYYYY 💘🎉</h1>
-                    <p>You just made me the happiest person alive 🥹❤️</p>
-                </div>
-            `;
-        }
+    function sayYes() {
+        document.body.innerHTML = `
+            <div style="
+                min-height:100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                flex-direction:column;
+                background:linear-gradient(135deg,#ff4d6d,#ff758f);
+                color:white;
+                font-family:Arial;
+                text-align:center;
+                padding:20px;
+            ">
+                <h1>YAYYYY 💘🎉</h1>
+                <p>You just made me the happiest person alive 🥹❤️</p>
+            </div>
+        `;
+    }
 
-        function moveNo() {
-            const button = document.getElementById("no");
-            const container = document.querySelector(".buttons");
+    function moveNo() {
+        const button = document.getElementById("no");
 
-            const maxX = container.clientWidth - button.offsetWidth;
-            const maxY = container.clientHeight - button.offsetHeight;
+        const padding = 20;
+        const maxX = window.innerWidth - button.offsetWidth - padding;
+        const maxY = window.innerHeight - button.offsetHeight - padding;
 
-            const x = Math.random() * maxX;
-            const y = Math.random() * maxY;
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
 
-            button.style.left = x + "px";
-            button.style.top = y + "px";
-        }
+        button.style.left = x + "px";
+        button.style.top = y + "px";
+    }
     </script>
 </body>
 </html>

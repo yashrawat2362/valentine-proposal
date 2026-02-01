@@ -3,10 +3,11 @@ const noBtn = document.getElementById("no");
 const music = document.getElementById("bgMusic");
 const heartsContainer = document.querySelector(".hearts");
 
-/* Play music on first interaction */
+/* YES button */
 yesBtn.addEventListener("click", () => {
     music.play().catch(() => {});
-    
+    launchConfetti();
+
     document.body.innerHTML = `
         <div style="
             min-height:100vh;
@@ -26,29 +27,7 @@ yesBtn.addEventListener("click", () => {
     `;
 });
 
-
-/* Yes Button */
-yesBtn.addEventListener("click", () => {
-    document.body.innerHTML = `
-        <div style="
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            flex-direction:column;
-            background:linear-gradient(135deg,#ff4d6d,#ff758f);
-            color:white;
-            font-family:Arial;
-            text-align:center;
-            padding:20px;
-        ">
-            <h1>YAYYYY 💘🎉</h1>
-            <p>You just made me the happiest person alive 🥹❤️</p>
-        </div>
-    `;
-});
-
-/* No Button Movement */
+/* NO button movement */
 noBtn.addEventListener("mouseover", moveNo);
 noBtn.addEventListener("touchstart", moveNo);
 
@@ -61,16 +40,32 @@ function moveNo() {
     noBtn.style.top = y + "px";
 }
 
-/* Floating Hearts Generator */
+/* Floating hearts generator */
 setInterval(() => {
     const heart = document.createElement("span");
     heart.innerHTML = "💖";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+    heart.style.animationDuration = 3 + Math.random() * 3 + "s";
 
     heartsContainer.appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+    setTimeout(() => heart.remove(), 6000);
 }, 400);
+
+/* Confetti */
+function launchConfetti() {
+    for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.backgroundColor =
+            ["#ff4d6d", "#ff758f", "#ffd700", "#2ecc71", "#ffffff"][
+                Math.floor(Math.random() * 5)
+            ];
+        confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
+
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    }
+}

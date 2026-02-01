@@ -60,7 +60,7 @@ button {
 #yes {
     background: #2ecc71;
     color: white;
-    box-shadow: 0 0 0 rgba(46, 204, 113, 0.6);
+    margin-left: -12px;
 }
 
 #yes:hover {
@@ -96,6 +96,26 @@ button {
     to {
         transform: translateY(-110vh);
         opacity: 0;
+    }
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    top: -10px;
+    width: 8px;
+    height: 14px;
+    opacity: 0.9;
+    animation: confettiFall linear forwards;
+    z-index: 999;
+}
+
+@keyframes confettiFall {
+    from {
+        transform: translateY(0) rotate(0deg);
+    }
+    to {
+        transform: translateY(110vh) rotate(720deg);
     }
 }
 

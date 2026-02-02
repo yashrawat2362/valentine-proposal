@@ -45,8 +45,8 @@ p {
     justify-content: center;
     align-items: center;
     gap: 25px;
+    height: 60px;      /* prevents layout jump */
     position: relative;
-    height: 60px;   /* ✅ IMPORTANT: prevents collapse */
 }
 
 button {
@@ -74,7 +74,7 @@ button {
 #no {
     background: #e74c3c;
     color: white;
-    position: absolute;   /* stays in layout initially */
+    position: relative;   /* ✅ KEY FIX */
 }
 
 #no:hover {

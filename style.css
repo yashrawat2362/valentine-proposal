@@ -43,8 +43,10 @@ p {
 .buttons {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 25px;
     position: relative;
+    height: 60px;   /* ✅ IMPORTANT: prevents collapse */
 }
 
 button {
@@ -72,7 +74,7 @@ button {
 #no {
     background: #e74c3c;
     color: white;
-    position: fixed;
+    position: absolute;   /* stays in layout initially */
 }
 
 #no:hover {

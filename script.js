@@ -92,13 +92,21 @@ function launchConfetti() {
         setTimeout(() => confetti.remove(), 5000);
     }
 }
-// Visitor Counter (Global)
-fetch("https://api.countapi.xyz/hit/yashrawat2362.github.io/valentine-proposal")
-    .then(res => res.json())
-    .then(data => {
-        document.getElementById("visitCount").innerText = data.value;
-    })
-    .catch(() => {
-        document.getElementById("visitCount").innerText = "—";
-    });
+
+// ================= VISITOR COUNTER =================
+document.addEventListener("DOMContentLoaded", () => {
+    const counter = document.getElementById("visitCount");
+    if (!counter) return;
+
+    fetch("https://api.countapi.xyz/hit/yashrawat2362.github.io/valentine-proposal")
+        .then(res => res.json())
+        .then(data => {
+            counter.textContent = data.value;
+        })
+        .catch(err => {
+            console.error("Counter error:", err);
+            counter.textContent = "—";
+        });
+});
+
 

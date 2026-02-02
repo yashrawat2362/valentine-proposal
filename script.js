@@ -5,26 +5,27 @@ const heartsContainer = document.querySelector(".hearts");
 
 /* YES button */
 yesBtn.addEventListener("click", () => {
-    music.play().catch(() => {});
     launchConfetti();
 
-    document.body.innerHTML = `
-        <div style="
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            flex-direction:column;
-            background:linear-gradient(135deg,#ff4d6d,#ff758f);
-            color:white;
-            font-family:Arial;
-            text-align:center;
-            padding:20px;
-        ">
-            <h1>YAYYYY 💘🎉</h1>
-            <p>You just made me the happiest person alive 🥹❤️</p>
-        </div>
-    `;
+    setTimeout(() => {
+        document.body.innerHTML = `
+            <div style="
+                min-height:100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                flex-direction:column;
+                background:linear-gradient(135deg,#ff4d6d,#ff758f);
+                color:white;
+                font-family:Arial;
+                text-align:center;
+                padding:20px;
+            ">
+                <h1>YAYYYY 💘🎉</h1>
+                <p>You just made me the happiest person alive 🥹❤️</p>
+            </div>
+        `;
+    }, 1800); // wait for confetti 🎉
 });
 
 /* NO button movement */

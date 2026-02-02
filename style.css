@@ -130,3 +130,17 @@ button {
         font-size: 15px;
     }
 }
+
+/* Visitor Counter */
+.visitor-counter {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    z-index: 5;
+    font-family: Arial, sans-serif;
+    pointer-events: none;
+}
+

@@ -3,6 +3,24 @@ const noBtn = document.getElementById("no");
 const music = document.getElementById("bgMusic");
 const heartsContainer = document.querySelector(".hearts");
 
+let musicStarted = false;
+
+function startMusic() {
+    if (!musicStarted) {
+        music.volume = 0.6; // nice soft romantic volume
+        music.play().then(() => {
+            musicStarted = true;
+        }).catch(() => {
+            console.log("Autoplay blocked, waiting for user gesture");
+        });
+    }
+}
+
+// Mobile + Desktop safe
+document.addEventListener("click", startMusic);
+document.addEventListener("touchstart", startMusic);
+
+
 /* YES button */
 yesBtn.addEventListener("click", () => {
     launchConfetti();

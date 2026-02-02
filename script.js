@@ -92,21 +92,3 @@ function launchConfetti() {
         setTimeout(() => confetti.remove(), 5000);
     }
 }
-
-// ================= VISITOR COUNTER =================
-document.addEventListener("DOMContentLoaded", () => {
-    const counter = document.getElementById("visitCount");
-    if (!counter) return;
-
-    fetch("https://api.countapi.xyz/hit/yashrawat2362.github.io/valentine-proposal")
-        .then(res => res.json())
-        .then(data => {
-            counter.textContent = data.value;
-        })
-        .catch(err => {
-            console.error("Counter error:", err);
-            counter.textContent = "—";
-        });
-});
-
-

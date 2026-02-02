@@ -33,6 +33,10 @@ noBtn.addEventListener("touchstart", moveNo);
 
 function moveNo() {
     const padding = 20;
+
+    // switch to fixed only when moving
+    noBtn.style.position = "fixed";
+
     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
 

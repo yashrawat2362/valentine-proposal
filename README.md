@@ -10,7 +10,7 @@
 [![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://github.com/yashrawat2362/valentine-proposal)
 [![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://github.com/yashrawat2362/valentine-proposal)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/yashrawat2362/valentine-proposal)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github&logoColor=white)](https://yashrawat2362.github.io/valentine-proposal/)
+[![GitHub Pages](https://img.shields.io/badge/Deployed%20on-GitHub%20Pages-222?style=for-the-badge&logo=github&logoColor=white)](https://yashrawat2362.github.io/valentine-proposal/)
 
 <br>
 
@@ -18,10 +18,13 @@
 
 <br>
 
-<!-- Website Preview -->
-<img src="https://yashrawat2362.github.io/valentine-proposal/preview.png" alt="Valentine Proposal Preview" width="700" style="border-radius: 16px;" />
+### 🌐 Live Preview
 
-<br><br>
+[![Website Screenshot](https://api.screenshotone.com/take?url=https://yashrawat2362.github.io/valentine-proposal/&viewport_width=1280&viewport_height=720&format=jpg&quality=90)](https://yashrawat2362.github.io/valentine-proposal/)
+
+<br>
+
+**👆 Click the image above to open the live site!**
 
 </div>
 
@@ -32,32 +35,30 @@
 | Feature | Description |
 |---|---|
 | 🎵 **Background Music** | Romantic music plays automatically on first tap |
-| 🌌 **Starry Night Sky** | 80 twinkling stars animate in the background |
+| 🌌 **Starry Night Sky** | 80+ twinkling stars animate in the dark background |
 | 🌸 **Falling Petals** | Rose petals & sparkles float down the screen |
 | 💫 **Floating Card** | The proposal card gently bobs up and down |
-| 💗 **Heartbeat Animation** | Heart icon pulses with a realistic heartbeat |
+| 💗 **Heartbeat Animation** | Heart icon pulses with a realistic heartbeat effect |
 | 😏 **Runaway "No" Button** | The No button wiggles away with cheeky messages |
-| 🎉 **Confetti Celebration** | Clicking Yes triggers a colorful confetti burst |
+| 🎉 **Confetti on Yes** | Clicking Yes triggers a colorful confetti burst |
 | 🎵 **Music Player Pill** | Top-right pill to pause/resume music anytime |
 | 📱 **Fully Responsive** | Works beautifully on mobile, tablet & desktop |
 
 ---
 
-## 🖥️ Preview
+## 🖥️ Screenshots
 
 <div align="center">
 
-### 🌹 Splash Screen
-*Tap anywhere to begin — music starts with a smooth fade-in*
-
-<img src="https://yashrawat2362.github.io/valentine-proposal/preview.png" alt="Splash Screen" width="650" />
-
-<br><br>
-
 ### 💕 Proposal Card
-*Romantic glassmorphism card with floating animation and falling petals*
 
-<img src="https://yashrawat2362.github.io/valentine-proposal/preview.png" alt="Proposal Card" width="650" />
+[![Proposal Card](https://api.screenshotone.com/take?url=https://yashrawat2362.github.io/valentine-proposal/&viewport_width=1280&viewport_height=800&format=jpg&quality=85)](https://yashrawat2362.github.io/valentine-proposal/)
+
+<br>
+
+### 📱 Mobile View
+
+[![Mobile View](https://api.screenshotone.com/take?url=https://yashrawat2362.github.io/valentine-proposal/&viewport_width=390&viewport_height=844&format=jpg&quality=85)](https://yashrawat2362.github.io/valentine-proposal/)
 
 </div>
 
@@ -65,13 +66,13 @@
 
 ## 🚀 Getting Started
 
-### Option 1 — View Live
-Just open the live site directly:
+### View Live
+Open the site directly in your browser:
 ```
 https://yashrawat2362.github.io/valentine-proposal/
 ```
 
-### Option 2 — Run Locally
+### Run Locally
 
 **1. Clone the repository**
 ```bash
@@ -79,20 +80,16 @@ git clone https://github.com/yashrawat2362/valentine-proposal.git
 cd valentine-proposal
 ```
 
-**2. Open in browser**
+**2. Serve locally** (required for music to work)
 ```bash
-# Simply open index.html in your browser
-open index.html          # macOS
-start index.html         # Windows
-xdg-open index.html      # Linux
+# Using Python
+python -m http.server 8000
+
+# Then open in browser:
+# http://localhost:8000
 ```
 
-> ⚠️ **Note:** For music to work locally, serve via a local server (not file://) due to browser audio policies.
-> ```bash
-> # Using Python
-> python -m http.server 8000
-> # Then open: http://localhost:8000
-> ```
+> ⚠️ Don't just double-click `index.html` — music won't work over `file://` due to browser security. Always use a local server.
 
 ---
 
@@ -101,58 +98,63 @@ xdg-open index.html      # Linux
 ```
 valentine-proposal/
 │
-├── index.html       # Main page — structure & layout
-├── style.css        # All animations, themes & styling
-├── script.js        # Interactivity — hearts, confetti, music
-├── music.mp3        # Background romantic music 🎵
-├── preview.png      # OG preview image for social sharing
-└── README.md        # You are here 📍
+├── 📄 index.html       ← Main page (structure & layout)
+├── 🎨 style.css        ← All animations, themes & styling
+├── ⚙️  script.js        ← Interactivity: hearts, confetti, music
+├── 🎵 music.mp3        ← Background romantic music
+├── 🖼️  preview.png      ← OG image for social sharing
+└── 📘 README.md        ← You are here!
 ```
 
 ---
 
 ## 🎨 Tech Stack
 
-- **HTML5** — Semantic structure
-- **CSS3** — Animations, glassmorphism, responsive design
-- **Vanilla JavaScript** — Interactions, confetti, music control
-- **Google Fonts** — *Playfair Display* & *Lato*
-- **GitHub Pages** — Free hosting & deployment
+| Technology | Usage |
+|---|---|
+| **HTML5** | Page structure & semantic layout |
+| **CSS3** | Animations, glassmorphism, responsive design |
+| **Vanilla JavaScript** | Music control, confetti, button interactions |
+| **Google Fonts** | *Playfair Display* (headings) + *Lato* (body) |
+| **GitHub Pages** | Free hosting & deployment |
 
 ---
 
 ## 💡 How It Works
 
 ```
-User opens link
-      ↓
-Splash screen appears  →  "Open with Love — tap anywhere"
-      ↓
-User taps / clicks
-      ↓
-🎵 Music fades in  +  🎵 Music pill appears (top-right)
-      ↓
-Romantic card revealed with stars & falling petals
-      ↓
-   ┌──────────────────┐
-   │  Yes 💖  |  No 😅 │
-   └──────────────────┘
-        ↓           ↓
-  🎉 Confetti    😏 Button wiggles away
-  + Yes message  + Cheeky message appears
+User opens the link
+        ↓
+  "Open with Love"
+   splash appears
+        ↓
+  User taps / clicks
+        ↓
+  🎵 Music fades in
+  🌟 Stars twinkle
+  🌸 Petals fall
+        ↓
+  Proposal card appears
+        ↓
+  ┌──────────────────────┐
+  │   Yes 💖   |   No 😅  │
+  └──────────────────────┘
+       ↓                ↓
+  🎉 Confetti       😏 Button wiggles
+  💌 Sweet message  💬 Cheeky reply
 ```
 
 ---
 
-## 🌐 Deployment
+## 🌐 Deploy Your Own
 
-This project is deployed via **GitHub Pages**.
-
-To deploy your own fork:
-1. Fork this repository
+1. **Fork** this repository
 2. Go to **Settings → Pages**
-3. Set source to `main` branch → `/ (root)`
-4. Your site will be live at `https://<your-username>.github.io/valentine-proposal/`
+3. Set source: `main` branch → `/ (root)`
+4. Your site goes live at:
+   ```
+   https://<your-username>.github.io/valentine-proposal/
+   ```
 
 ---
 
@@ -162,14 +164,13 @@ To deploy your own fork:
 
 Made with ❤️ by [yashrawat2362](https://github.com/yashrawat2362)
 
-*If this made someone smile, give it a ⭐ — it means the world!*
+*If this made someone smile, leave a ⭐ — it means the world!*
 
 [![GitHub stars](https://img.shields.io/github/stars/yashrawat2362/valentine-proposal?style=social)](https://github.com/yashrawat2362/valentine-proposal/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/yashrawat2362/valentine-proposal?style=social)](https://github.com/yashrawat2362/valentine-proposal/network/members)
 
-</div>
+<br>
 
----
+*Built with HTML · CSS · JavaScript · and a lot of 💗*
 
-<div align="center">
-<sub>Built with HTML · CSS · JavaScript · and a lot of 💗</sub>
 </div>

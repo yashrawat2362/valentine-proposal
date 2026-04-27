@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <title>Be My Valentine 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A sweet interactive Valentine proposal web page 💖 Made with love." />
-  <meta property="og:title" content="Be My Valentine 💕" />
-  <meta property="og:description" content="From my heart to this screen… Will you be my Valentine? 🌹" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,111 +28,139 @@
       position: relative;
     }
 
-    /* ---- Music hint overlay ---- */
-    #music-hint {
+    /* ========== SPLASH SCREEN ========== */
+    #splash {
       position: fixed;
       inset: 0;
-      z-index: 999;
+      z-index: 9999;
+      background: radial-gradient(ellipse at 30% 20%, #2d0d1a 0%, #12060d 60%, #0d0610 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(ellipse at 30% 20%, #2d0d1a 0%, #12060d 60%, #0d0610 100%);
       cursor: pointer;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.9s ease;
     }
-    #music-hint .pulse-heart {
-      font-size: 80px;
-      animation: heartBeat 1.4s ease-in-out infinite;
-      margin-bottom: 24px;
-    }
-    #music-hint h2 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 28px;
-      color: #fff;
-      font-style: italic;
-      margin-bottom: 10px;
-    }
-    #music-hint p {
-      font-size: 14px;
-      color: rgba(255, 200, 210, 0.7);
-      letter-spacing: 1px;
-      animation: blinkText 1.6s ease-in-out infinite;
-    }
-    @keyframes blinkText {
-      0%, 100% { opacity: 0.4; }
-      50%       { opacity: 1; }
-    }
-    #music-hint.hidden {
+    #splash.fade-out {
       opacity: 0;
       pointer-events: none;
     }
+    .splash-heart {
+      font-size: 90px;
+      margin-bottom: 28px;
+      animation: hb 1.4s ease-in-out infinite;
+      display: block;
+      line-height: 1;
+    }
+    #splash h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 30px;
+      color: #fff;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+    #splash .tap-hint {
+      font-size: 13px;
+      color: rgba(255,200,210,0.65);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: blink 1.6s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 0.3; }
+      50%      { opacity: 1; }
+    }
 
-    /* ---- Music player pill ---- */
-    #music-player {
+    /* decorative line on splash */
+    #splash::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+      margin-top: 28px;
+    }
+
+    /* ========== MUSIC PILL ========== */
+    #music-pill {
       position: fixed;
-      top: 18px;
-      right: 18px;
-      z-index: 200;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 100, 130, 0.3);
+      background: rgba(30, 5, 15, 0.85);
+      border: 1px solid rgba(255, 100, 130, 0.5);
       border-radius: 50px;
-      padding: 8px 16px 8px 10px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      padding: 9px 18px 9px 11px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 0 20px rgba(232, 66, 106, 0.25);
+      /* always visible once splash is gone */
       opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(-8px);
+      transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
     }
-    #music-player.visible {
+    #music-pill.show {
       opacity: 1;
       transform: translateY(0);
     }
-    #toggle-music {
-      background: linear-gradient(135deg, var(--rose-light), var(--rose));
-      border: none;
+
+    #play-pause-btn {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      border: none;
+      background: linear-gradient(135deg, var(--rose-light), var(--rose));
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      font-size: 13px;
-      transition: transform 0.2s;
       flex-shrink: 0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 10px rgba(232,66,106,0.4);
     }
-    #toggle-music:hover { transform: scale(1.1); }
-    .music-label {
+    #play-pause-btn:hover {
+      transform: scale(1.12);
+      box-shadow: 0 4px 16px rgba(232,66,106,0.6);
+    }
+
+    .pill-label {
       font-size: 12px;
-      color: rgba(255, 200, 210, 0.8);
+      color: rgba(255, 200, 210, 0.85);
       font-weight: 300;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       white-space: nowrap;
     }
-    .music-bars {
+
+    /* animated music bars */
+    .bars {
       display: flex;
       align-items: flex-end;
-      gap: 2px;
-      height: 14px;
+      gap: 2.5px;
+      height: 16px;
     }
-    .music-bars span {
+    .bars span {
       display: block;
       width: 3px;
       background: var(--rose-light);
       border-radius: 2px;
-      animation: barBounce var(--bd) ease-in-out infinite alternate;
+      height: 5px;
+      transition: height 0.2s;
     }
-    @keyframes barBounce {
-      0%   { height: 3px; }
-      100% { height: 14px; }
-    }
-    .music-bars.paused span { animation-play-state: paused; height: 5px; }
+    .bars.playing span:nth-child(1) { animation: b1 0.55s ease-in-out infinite alternate; }
+    .bars.playing span:nth-child(2) { animation: b2 0.7s  ease-in-out infinite alternate; }
+    .bars.playing span:nth-child(3) { animation: b3 0.45s ease-in-out infinite alternate; }
+    .bars.playing span:nth-child(4) { animation: b4 0.6s  ease-in-out infinite alternate; }
+    @keyframes b1 { from { height: 3px; } to { height: 14px; } }
+    @keyframes b2 { from { height: 6px; } to { height: 16px; } }
+    @keyframes b3 { from { height: 4px; } to { height: 11px; } }
+    @keyframes b4 { from { height: 8px; } to { height: 15px; } }
 
-    /* ---- Stars ---- */
+    /* ========== STARS ========== */
     #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .star {
       position: absolute;
@@ -144,32 +169,31 @@
       animation: twinkle var(--d) ease-in-out infinite var(--dl);
     }
     @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.4); }
-      50%       { opacity: 0.75; transform: scale(1); }
+      0%,100% { opacity: 0; transform: scale(0.4); }
+      50%      { opacity: 0.8; transform: scale(1); }
     }
 
-    /* ---- Falling Petals ---- */
+    /* ========== PETALS ========== */
     #petals { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
     .petal {
       position: absolute;
       top: -50px;
-      font-size: 18px;
-      animation: fallPetal var(--fd) linear infinite var(--fdl);
+      animation: fall var(--fd) linear infinite var(--fdl);
       opacity: 0;
     }
-    @keyframes fallPetal {
-      0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
       8%   { opacity: 0.9; }
       85%  { opacity: 0.5; }
-      100% { transform: translateY(105vh) rotate(400deg) translateX(30px); opacity: 0; }
+      100% { transform: translateY(105vh) rotate(360deg) translateX(25px); opacity: 0; }
     }
 
-    /* ---- Card ---- */
+    /* ========== CARD ========== */
     #card {
       position: relative;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 100, 130, 0.3);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,100,130,0.3);
       border-radius: 24px;
       padding: 48px 56px;
       max-width: 460px;
@@ -178,14 +202,14 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow:
-        0 0 80px rgba(200, 50, 80, 0.18),
-        0 0 200px rgba(200, 50, 80, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      animation: cardFloat 5s ease-in-out infinite;
+        0 0 80px rgba(200,50,80,0.18),
+        0 0 200px rgba(200,50,80,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+      animation: float 5s ease-in-out infinite;
     }
-    @keyframes cardFloat {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-10px); }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
     }
     #card::before {
       content: '';
@@ -200,22 +224,22 @@
       font-size: 52px;
       display: block;
       margin-bottom: 18px;
-      animation: heartBeat 1.5s ease-in-out infinite;
+      animation: hb 1.5s ease-in-out infinite;
       line-height: 1;
     }
-    @keyframes heartBeat {
-      0%, 100% { transform: scale(1); }
-      14%       { transform: scale(1.22); }
-      28%       { transform: scale(1); }
-      42%       { transform: scale(1.16); }
-      56%       { transform: scale(1); }
+    @keyframes hb {
+      0%,100% { transform: scale(1); }
+      14%      { transform: scale(1.22); }
+      28%      { transform: scale(1); }
+      42%      { transform: scale(1.16); }
+      56%      { transform: scale(1); }
     }
 
     #card h1 {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 34px;
       font-weight: 700;
-      color: #ffffff;
+      color: #fff;
       letter-spacing: 0.4px;
       margin-bottom: 14px;
     }
@@ -228,7 +252,7 @@
       margin-bottom: 36px;
     }
 
-    /* ---- Buttons ---- */
+    /* ========== BUTTONS ========== */
     .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
     .btn {
@@ -245,50 +269,54 @@
     #yes-btn {
       background: linear-gradient(135deg, var(--rose-light) 0%, var(--rose) 50%, var(--rose-dark) 100%);
       color: #fff;
-      box-shadow: 0 4px 24px rgba(232, 66, 106, 0.5);
+      box-shadow: 0 4px 24px rgba(232,66,106,0.5);
     }
-    #yes-btn:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 32px rgba(232, 66, 106, 0.7); }
-    #yes-btn:active { transform: scale(0.97); }
+    #yes-btn:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 32px rgba(232,66,106,0.7); }
 
     #no-btn {
       background: transparent;
-      color: rgba(255, 200, 210, 0.65);
-      border: 1px solid rgba(255, 100, 130, 0.3);
+      color: rgba(255,200,210,0.65);
+      border: 1px solid rgba(255,100,130,0.3);
     }
     #no-btn:hover { background: rgba(255,255,255,0.06); color: rgba(255,200,210,1); }
 
     .no-msg {
       margin-top: 16px;
       font-size: 13px;
-      color: rgba(255, 180, 200, 0.75);
+      color: rgba(255,180,200,0.8);
       font-style: italic;
       min-height: 20px;
       letter-spacing: 0.3px;
     }
 
-    /* ---- Yes Message ---- */
+    /* ========== YES MESSAGE ========== */
     #yes-msg { display: none; flex-direction: column; align-items: center; gap: 14px; }
     #yes-msg .big-heart {
       font-size: 80px;
-      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      line-height: 1;
+      animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
     }
     @keyframes popIn {
       0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
       100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
-    #yes-msg h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-style: italic; color: #fff; }
-    #yes-msg p  { font-size: 14px; color: var(--blush); font-weight: 300; line-height: 1.7; }
+    #yes-msg h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-style: italic;
+      color: #fff;
+    }
+    #yes-msg p { font-size: 14px; color: var(--blush); font-weight: 300; line-height: 1.7; }
 
-    /* ---- Confetti ---- */
-    .confetti-piece {
+    /* ========== CONFETTI ========== */
+    .cp {
       position: fixed;
       width: 9px; height: 9px;
-      border-radius: 2px;
       pointer-events: none;
-      z-index: 100;
-      animation: confettiFall var(--cfd) ease-in forwards;
+      z-index: 500;
+      animation: cf var(--d2) ease-in forwards;
     }
-    @keyframes confettiFall {
+    @keyframes cf {
       0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
       80%  { opacity: 0.7; }
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
@@ -297,37 +325,32 @@
 </head>
 <body>
 
-  <!-- Music: keep your music.mp3 in the same folder as this file -->
+  <!-- Audio — keep music.mp3 in same folder -->
   <audio id="bgMusic" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Click-to-start overlay -->
-  <div id="music-hint" onclick="startExperience()">
-    <div class="pulse-heart">❤️</div>
+  <!-- ===== SPLASH (click to begin) ===== -->
+  <div id="splash" onclick="beginExperience()">
+    <span class="splash-heart">❤️</span>
     <h2>Open with Love</h2>
-    <p>✨ tap anywhere to begin ✨</p>
+    <p class="tap-hint">tap anywhere to begin</p>
   </div>
 
-  <!-- Music player pill -->
-  <div id="music-player">
-    <button id="toggle-music" onclick="toggleMusic()" title="Play / Pause">⏸</button>
-    <div class="music-bars" id="music-bars">
-      <span style="--bd:0.5s"></span>
-      <span style="--bd:0.7s"></span>
-      <span style="--bd:0.4s"></span>
-      <span style="--bd:0.6s"></span>
+  <!-- ===== MUSIC PILL ===== -->
+  <div id="music-pill">
+    <button id="play-pause-btn" onclick="toggleMusic()">⏸</button>
+    <div class="bars playing" id="bars">
+      <span></span><span></span><span></span><span></span>
     </div>
-    <span class="music-label">playing ♪</span>
+    <span class="pill-label" id="pill-label">playing ♪</span>
   </div>
 
-  <!-- Stars -->
+  <!-- Stars & Petals -->
   <div id="stars"></div>
-
-  <!-- Falling Petals -->
   <div id="petals"></div>
 
-  <!-- Card -->
+  <!-- ===== MAIN CARD ===== -->
   <div id="card">
     <span class="heart-icon">❤️</span>
     <h1>Hey Love 💕</h1>
@@ -352,74 +375,77 @@
   </div>
 
   <script>
-    const audio      = document.getElementById('bgMusic');
-    const hint       = document.getElementById('music-hint');
-    const player     = document.getElementById('music-player');
-    const toggleBtn  = document.getElementById('toggle-music');
-    const bars       = document.getElementById('music-bars');
-    const musicLabel = document.querySelector('.music-label');
+    const audio     = document.getElementById('bgMusic');
+    const splash    = document.getElementById('splash');
+    const pill      = document.getElementById('music-pill');
+    const ppBtn     = document.getElementById('play-pause-btn');
+    const barsEl    = document.getElementById('bars');
+    const pillLabel = document.getElementById('pill-label');
 
-    function startExperience() {
-      // Fade out overlay
-      hint.classList.add('hidden');
-      setTimeout(() => { hint.style.display = 'none'; }, 800);
+    function beginExperience() {
+      // 1. Fade out splash
+      splash.classList.add('fade-out');
+      setTimeout(() => { splash.style.display = 'none'; }, 900);
 
-      // Start music with fade-in
+      // 2. Play music
       audio.volume = 0;
       audio.play().then(() => {
-        player.classList.add('visible');
-        let vol = 0;
-        const fadeIn = setInterval(() => {
-          vol = Math.min(vol + 0.04, 0.75);
-          audio.volume = vol;
-          if (vol >= 0.75) clearInterval(fadeIn);
+        // fade volume up
+        let v = 0;
+        const iv = setInterval(() => {
+          v = Math.min(v + 0.05, 0.75);
+          audio.volume = v;
+          if (v >= 0.75) clearInterval(iv);
         }, 80);
-      }).catch(() => {
-        // If still blocked, show player anyway
-        player.classList.add('visible');
-        toggleBtn.textContent = '▶';
-        bars.classList.add('paused');
-        musicLabel.textContent = 'tap ▶ to play';
+      }).catch(err => {
+        console.warn('Autoplay blocked:', err);
+        // Show pill in paused state
+        ppBtn.textContent = '▶';
+        barsEl.classList.remove('playing');
+        pillLabel.textContent = 'tap ▶ to play';
       });
+
+      // 3. Show music pill
+      pill.classList.add('show');
     }
 
     function toggleMusic() {
       if (audio.paused) {
         audio.play();
-        toggleBtn.textContent = '⏸';
-        bars.classList.remove('paused');
-        musicLabel.textContent = 'playing ♪';
+        ppBtn.textContent = '⏸';
+        barsEl.classList.add('playing');
+        pillLabel.textContent = 'playing ♪';
       } else {
         audio.pause();
-        toggleBtn.textContent = '▶';
-        bars.classList.add('paused');
-        musicLabel.textContent = 'paused';
+        ppBtn.textContent = '▶';
+        barsEl.classList.remove('playing');
+        pillLabel.textContent = 'paused';
       }
     }
 
-    // Generate stars
+    // ---- Stars ----
     const starsEl = document.getElementById('stars');
     for (let i = 0; i < 80; i++) {
       const s = document.createElement('div');
       s.className = 'star';
-      const size = (Math.random() * 2.5 + 0.8).toFixed(1);
-      s.style.cssText = `width:${size}px;height:${size}px;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;--d:${(Math.random()*3+2).toFixed(1)}s;--dl:-${(Math.random()*5).toFixed(1)}s`;
+      const sz = (Math.random() * 2.5 + 0.8).toFixed(1);
+      s.style.cssText = `width:${sz}px;height:${sz}px;left:${(Math.random()*100).toFixed(1)}%;top:${(Math.random()*100).toFixed(1)}%;--d:${(Math.random()*3+2).toFixed(1)}s;--dl:-${(Math.random()*5).toFixed(1)}s`;
       starsEl.appendChild(s);
     }
 
-    // Generate falling petals
+    // ---- Petals ----
     const petalsEl = document.getElementById('petals');
-    const petalSymbols = ['🌸','🌹','❤️','✨','🌺','💗','❄️'];
-    for (let i = 0; i < 18; i++) {
+    const syms = ['🌸','🌹','❤️','✨','🌺','💗','🌷'];
+    for (let i = 0; i < 20; i++) {
       const p = document.createElement('div');
       p.className = 'petal';
-      p.textContent = petalSymbols[i % petalSymbols.length];
-      p.style.cssText = `left:${(Math.random()*100).toFixed(1)}%;font-size:${Math.floor(Math.random()*14+12)}px;--fd:${(Math.random()*7+6).toFixed(1)}s;--fdl:-${(Math.random()*10).toFixed(1)}s`;
+      p.textContent = syms[i % syms.length];
+      p.style.cssText = `left:${(Math.random()*100).toFixed(1)}%;font-size:${Math.floor(Math.random()*14+12)}px;--fd:${(Math.random()*7+6).toFixed(1)}s;--fdl:-${(Math.random()*12).toFixed(1)}s`;
       petalsEl.appendChild(p);
     }
 
-    // No button
-    const noMessages = [
+    // ---- No button ----
+    const noMsgs = [
       "Are you sure? 😏",
       "Think again, love... 💗",
       "Your heart knows the truth 🌹",
@@ -430,14 +456,14 @@
     let noCount = 0;
 
     function sayNo() {
-      document.getElementById('no-msg').textContent = noMessages[Math.min(noCount, noMessages.length - 1)];
+      document.getElementById('no-msg').textContent = noMsgs[Math.min(noCount, noMsgs.length - 1)];
       noCount++;
-      const noBtn = document.getElementById('no-btn');
-      const dx = (Math.random() - 0.5) * 80;
-      const dy = (Math.random() - 0.5) * 50;
-      noBtn.style.transition = 'transform 0.3s ease';
-      noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
-      setTimeout(() => { noBtn.style.transform = 'translate(0,0)'; }, 350);
+      const btn = document.getElementById('no-btn');
+      const dx = (Math.random() - 0.5) * 90;
+      const dy = (Math.random() - 0.5) * 60;
+      btn.style.transition = 'transform 0.3s ease';
+      btn.style.transform = `translate(${dx}px,${dy}px)`;
+      setTimeout(() => { btn.style.transform = 'translate(0,0)'; }, 380);
     }
 
     function sayYes() {
@@ -447,16 +473,24 @@
     }
 
     function spawnConfetti() {
-      const colors = ['#e8426a','#ff8fab','#ffd6e0','#c77dff','#f9c74f','#90e0ef','#ff6b6b','#ffc8dd','#b5e48c'];
-      for (let i = 0; i < 70; i++) {
+      const cols = ['#e8426a','#ff8fab','#ffd6e0','#c77dff','#f9c74f','#90e0ef','#ff6b6b','#ffc8dd','#b5e48c'];
+      for (let i = 0; i < 80; i++) {
         setTimeout(() => {
           const c = document.createElement('div');
-          c.className = 'confetti-piece';
+          c.className = 'cp';
           const dur = (Math.random() * 1.5 + 2).toFixed(1);
-          c.style.cssText = `left:${(25+Math.random()*50).toFixed(1)}%;top:20%;background:${colors[Math.floor(Math.random()*colors.length)]};--cfd:${dur}s;border-radius:${Math.random()>0.5?'50%':'2px'};animation-delay:${(Math.random()*0.4).toFixed(2)}s;transform:rotate(${Math.floor(Math.random()*360)}deg)`;
+          c.style.cssText = `
+            left:${(20+Math.random()*60).toFixed(1)}%;
+            top:15%;
+            background:${cols[Math.floor(Math.random()*cols.length)]};
+            border-radius:${Math.random()>0.5?'50%':'3px'};
+            --d2:${dur}s;
+            animation-delay:${(Math.random()*0.5).toFixed(2)}s;
+            transform:rotate(${Math.floor(Math.random()*360)}deg)
+          `;
           document.body.appendChild(c);
-          setTimeout(() => c.remove(), parseFloat(dur) * 1000 + 500);
-        }, i * 25);
+          setTimeout(() => c.remove(), parseFloat(dur)*1000 + 600);
+        }, i * 20);
       }
     }
   </script>

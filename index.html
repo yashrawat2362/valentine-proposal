@@ -1,50 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Be My Valentine 💖</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <title>Be My Valentine 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A sweet interactive Valentine proposal web page 💖 Made with love." />
+  <meta property="og:title" content="Be My Valentine 💕" />
+  <meta property="og:description" content="From my heart to this screen… Will you be my Valentine? 🌹" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- SEO & Social Media Preview -->
-    <meta name="description" content="A sweet interactive Valentine proposal web page 💖 Made with love." />
+    :root {
+      --rose: #e8426a;
+      --rose-dark: #c02050;
+      --rose-light: #ff8fab;
+      --blush: rgba(255, 200, 210, 0.85);
+      --bg: #12060d;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --card-border: rgba(255, 100, 130, 0.3);
+    }
 
-    <meta property="og:title" content="Be My Valentine 💕" />
-    <meta property="og:description" content="From my heart to this screen… Will you be my Valentine? 🌹" />
-    <meta property="og:image" content="https://yashrawat2362.github.io/valentine-proposal/preview.png" />
-    <meta property="og:url" content="https://yashrawat2362.github.io/valentine-proposal/" />
-    <meta property="og:type" content="website" />
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Be My Valentine 💕" />
-    <meta name="twitter:description" content="A sweet interactive Valentine proposal 💖" />
-    <meta name="twitter:image" content="https://yashrawat2362.github.io/valentine-proposal/preview.png" />
+    body {
+      font-family: 'Lato', sans-serif;
+      background: radial-gradient(ellipse at 30% 20%, #2d0d1a 0%, #12060d 50%, #0d0610 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
 
-    <link rel="stylesheet" href="style.css" />
+    /* ---- Stars ---- */
+    #stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--d) ease-in-out infinite var(--dl);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.4); }
+      50%       { opacity: 0.75; transform: scale(1); }
+    }
+
+    /* ---- Falling Petals ---- */
+    #petals {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -50px;
+      font-size: 18px;
+      animation: fallPetal var(--fd) linear infinite var(--fdl);
+      opacity: 0;
+    }
+    @keyframes fallPetal {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+      8%   { opacity: 0.9; }
+      85%  { opacity: 0.5; }
+      100% { transform: translateY(105vh) rotate(400deg) translateX(30px); opacity: 0; }
+    }
+
+    /* ---- Card ---- */
+    #card {
+      position: relative;
+      z-index: 10;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 48px 56px;
+      max-width: 460px;
+      width: 92%;
+      text-align: center;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow:
+        0 0 80px rgba(200, 50, 80, 0.18),
+        0 0 200px rgba(200, 50, 80, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      animation: cardFloat 5s ease-in-out infinite;
+    }
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    /* decorative top line */
+    #card::before {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+      margin: 0 auto 28px;
+    }
+
+    .heart-icon {
+      font-size: 52px;
+      display: block;
+      margin-bottom: 18px;
+      animation: heartBeat 1.5s ease-in-out infinite;
+      line-height: 1;
+    }
+    @keyframes heartBeat {
+      0%, 100%  { transform: scale(1); }
+      14%        { transform: scale(1.22); }
+      28%        { transform: scale(1); }
+      42%        { transform: scale(1.16); }
+      56%        { transform: scale(1); }
+    }
+
+    #card h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 34px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.4px;
+      margin-bottom: 14px;
+    }
+
+    #card .subtitle {
+      font-size: 15px;
+      color: var(--blush);
+      line-height: 1.9;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 36px;
+    }
+
+    /* ---- Buttons ---- */
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 38px;
+      border-radius: 50px;
+      border: none;
+      font-size: 15px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.6px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    #yes-btn {
+      background: linear-gradient(135deg, var(--rose-light) 0%, var(--rose) 50%, var(--rose-dark) 100%);
+      color: #fff;
+      box-shadow: 0 4px 24px rgba(232, 66, 106, 0.5);
+    }
+    #yes-btn:hover {
+      transform: scale(1.08) translateY(-2px);
+      box-shadow: 0 8px 32px rgba(232, 66, 106, 0.7);
+    }
+    #yes-btn:active { transform: scale(0.97); }
+
+    #no-btn {
+      background: transparent;
+      color: rgba(255, 200, 210, 0.65);
+      border: 1px solid rgba(255, 100, 130, 0.3);
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.2s, background 0.2s;
+    }
+    #no-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 200, 210, 1);
+    }
+
+    .no-msg {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255, 180, 200, 0.75);
+      font-style: italic;
+      min-height: 20px;
+      transition: opacity 0.3s;
+      letter-spacing: 0.3px;
+    }
+
+    /* ---- Yes Message ---- */
+    #yes-msg {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    #yes-msg .big-heart {
+      font-size: 80px;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    #yes-msg h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-style: italic;
+      color: #fff;
+    }
+    #yes-msg p {
+      font-size: 14px;
+      color: var(--blush);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ---- Confetti ---- */
+    .confetti-piece {
+      position: fixed;
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 100;
+      animation: confettiFall var(--cfd) ease-in forwards;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      80%  { opacity: 0.7; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
-    <!-- Background Music -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="music.mp3" type="audio/mpeg" />
-    </audio>
 
-    <!-- Floating Hearts -->
-    <div class="hearts"></div>
+  <!-- Stars -->
+  <div id="stars"></div>
 
-    <!-- Card -->
-    <div class="card">
-        <h1>Hey Love 💕</h1>
-        <p>
-            From my heart to this screen…<br />
-            Will you be my Valentine? 🌹
-        </p>
+  <!-- Falling Petals -->
+  <div id="petals"></div>
 
-        <div class="buttons">
-            <button id="yes">Yes 💖</button>
-            <button id="no">No 😅</button>
-        </div>
+  <!-- Card -->
+  <div id="card">
+    <span class="heart-icon">❤️</span>
+    <h1>Hey Love 💕</h1>
+    <p class="subtitle">
+      From my heart to this screen&hellip;<br>
+      Will you be my Valentine? 🌹
+    </p>
+
+    <div id="main-content">
+      <div class="btn-group">
+        <button class="btn" id="yes-btn" onclick="sayYes()">Yes 💖</button>
+        <button class="btn" id="no-btn" onclick="sayNo()">No 😅</button>
+      </div>
+      <p class="no-msg" id="no-msg"></p>
     </div>
 
-    <script src="script.js"></script>
+    <div id="yes-msg">
+      <span class="big-heart">❤️</span>
+      <h2>Yay!! I knew it! 🎉</h2>
+      <p>You just made my heart the happiest heart<br>in the entire universe. 🌸</p>
+    </div>
+  </div>
+
+  <script>
+    // Stars
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = (Math.random() * 2.5 + 0.8).toFixed(1);
+      s.style.cssText = `
+        width:${size}px;height:${size}px;
+        left:${(Math.random()*100).toFixed(2)}%;
+        top:${(Math.random()*100).toFixed(2)}%;
+        --d:${(Math.random()*3+2).toFixed(1)}s;
+        --dl:-${(Math.random()*5).toFixed(1)}s
+      `;
+      starsEl.appendChild(s);
+    }
+
+    // Petals
+    const petalsEl = document.getElementById('petals');
+    const petalSymbols = ['🌸', '🌹', '❤️', '✨', '🌺', '💗', '❄️'];
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = petalSymbols[i % petalSymbols.length];
+      p.style.cssText = `
+        left:${(Math.random()*100).toFixed(1)}%;
+        font-size:${Math.floor(Math.random()*14+12)}px;
+        --fd:${(Math.random()*7+6).toFixed(1)}s;
+        --fdl:-${(Math.random()*10).toFixed(1)}s
+      `;
+      petalsEl.appendChild(p);
+    }
+
+    // No button wiggle messages
+    const noMessages = [
+      "Are you sure? 😏",
+      "Think again, love... 💗",
+      "Your heart knows the truth 🌹",
+      "Is that really your answer? 😂",
+      "Okay okay… maybe? 😍",
+      "I'll wait forever 💝"
+    ];
+    let noCount = 0;
+
+    function sayNo() {
+      const msg = document.getElementById('no-msg');
+      msg.textContent = noMessages[Math.min(noCount, noMessages.length - 1)];
+      noCount++;
+
+      const noBtn = document.getElementById('no-btn');
+      const dx = (Math.random() - 0.5) * 80;
+      const dy = (Math.random() - 0.5) * 50;
+      noBtn.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
+      setTimeout(() => {
+        noBtn.style.transform = 'translate(0,0)';
+      }, 350);
+    }
+
+    function sayYes() {
+      document.getElementById('main-content').style.display = 'none';
+      const yesMsg = document.getElementById('yes-msg');
+      yesMsg.style.display = 'flex';
+      spawnConfetti();
+    }
+
+    function spawnConfetti() {
+      const colors = [
+        '#e8426a','#ff8fab','#ffd6e0',
+        '#c77dff','#f9c74f','#90e0ef',
+        '#ff6b6b','#ffc8dd','#b5e48c'
+      ];
+      for (let i = 0; i < 70; i++) {
+        setTimeout(() => {
+          const c = document.createElement('div');
+          c.className = 'confetti-piece';
+          const duration = (Math.random() * 1.5 + 2).toFixed(1);
+          c.style.cssText = `
+            left:${(25 + Math.random() * 50).toFixed(1)}%;
+            top:20%;
+            background:${colors[Math.floor(Math.random() * colors.length)]};
+            --cfd:${duration}s;
+            border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+            animation-delay:${(Math.random() * 0.4).toFixed(2)}s;
+            transform:rotate(${Math.floor(Math.random()*360)}deg)
+          `;
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), parseFloat(duration) * 1000 + 500);
+        }, i * 25);
+      }
+    }
+  </script>
 </body>
 </html>

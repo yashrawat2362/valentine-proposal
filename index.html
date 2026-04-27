@@ -16,15 +16,9 @@
       --rose-dark: #c02050;
       --rose-light: #ff8fab;
       --blush: rgba(255, 200, 210, 0.85);
-      --bg: #12060d;
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --card-border: rgba(255, 100, 130, 0.3);
     }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-    }
+    html, body { height: 100%; width: 100%; }
 
     body {
       font-family: 'Lato', sans-serif;
@@ -37,13 +31,112 @@
       position: relative;
     }
 
-    /* ---- Stars ---- */
-    #stars {
+    /* ---- Music hint overlay ---- */
+    #music-hint {
       position: fixed;
       inset: 0;
-      z-index: 0;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at 30% 20%, #2d0d1a 0%, #12060d 60%, #0d0610 100%);
+      cursor: pointer;
+      transition: opacity 0.8s ease;
+    }
+    #music-hint .pulse-heart {
+      font-size: 80px;
+      animation: heartBeat 1.4s ease-in-out infinite;
+      margin-bottom: 24px;
+    }
+    #music-hint h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      color: #fff;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    #music-hint p {
+      font-size: 14px;
+      color: rgba(255, 200, 210, 0.7);
+      letter-spacing: 1px;
+      animation: blinkText 1.6s ease-in-out infinite;
+    }
+    @keyframes blinkText {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+    #music-hint.hidden {
+      opacity: 0;
       pointer-events: none;
     }
+
+    /* ---- Music player pill ---- */
+    #music-player {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 100, 130, 0.3);
+      border-radius: 50px;
+      padding: 8px 16px 8px 10px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #music-player.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #toggle-music {
+      background: linear-gradient(135deg, var(--rose-light), var(--rose));
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    #toggle-music:hover { transform: scale(1.1); }
+    .music-label {
+      font-size: 12px;
+      color: rgba(255, 200, 210, 0.8);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .music-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 14px;
+    }
+    .music-bars span {
+      display: block;
+      width: 3px;
+      background: var(--rose-light);
+      border-radius: 2px;
+      animation: barBounce var(--bd) ease-in-out infinite alternate;
+    }
+    @keyframes barBounce {
+      0%   { height: 3px; }
+      100% { height: 14px; }
+    }
+    .music-bars.paused span { animation-play-state: paused; height: 5px; }
+
+    /* ---- Stars ---- */
+    #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .star {
       position: absolute;
       background: #fff;
@@ -56,13 +149,7 @@
     }
 
     /* ---- Falling Petals ---- */
-    #petals {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
+    #petals { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
     .petal {
       position: absolute;
       top: -50px;
@@ -81,8 +168,8 @@
     #card {
       position: relative;
       z-index: 10;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 100, 130, 0.3);
       border-radius: 24px;
       padding: 48px 56px;
       max-width: 460px;
@@ -100,8 +187,6 @@
       0%, 100% { transform: translateY(0px); }
       50%       { transform: translateY(-10px); }
     }
-
-    /* decorative top line */
     #card::before {
       content: '';
       display: block;
@@ -119,11 +204,11 @@
       line-height: 1;
     }
     @keyframes heartBeat {
-      0%, 100%  { transform: scale(1); }
-      14%        { transform: scale(1.22); }
-      28%        { transform: scale(1); }
-      42%        { transform: scale(1.16); }
-      56%        { transform: scale(1); }
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.22); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.16); }
+      56%       { transform: scale(1); }
     }
 
     #card h1 {
@@ -134,7 +219,6 @@
       letter-spacing: 0.4px;
       margin-bottom: 14px;
     }
-
     #card .subtitle {
       font-size: 15px;
       color: var(--blush);
@@ -145,12 +229,7 @@
     }
 
     /* ---- Buttons ---- */
-    .btn-group {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
     .btn {
       padding: 14px 38px;
@@ -161,30 +240,22 @@
       font-weight: 700;
       cursor: pointer;
       letter-spacing: 0.6px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-
     #yes-btn {
       background: linear-gradient(135deg, var(--rose-light) 0%, var(--rose) 50%, var(--rose-dark) 100%);
       color: #fff;
       box-shadow: 0 4px 24px rgba(232, 66, 106, 0.5);
     }
-    #yes-btn:hover {
-      transform: scale(1.08) translateY(-2px);
-      box-shadow: 0 8px 32px rgba(232, 66, 106, 0.7);
-    }
+    #yes-btn:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 32px rgba(232, 66, 106, 0.7); }
     #yes-btn:active { transform: scale(0.97); }
 
     #no-btn {
       background: transparent;
       color: rgba(255, 200, 210, 0.65);
       border: 1px solid rgba(255, 100, 130, 0.3);
-      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.2s, background 0.2s;
     }
-    #no-btn:hover {
-      background: rgba(255, 255, 255, 0.06);
-      color: rgba(255, 200, 210, 1);
-    }
+    #no-btn:hover { background: rgba(255,255,255,0.06); color: rgba(255,200,210,1); }
 
     .no-msg {
       margin-top: 16px;
@@ -192,17 +263,11 @@
       color: rgba(255, 180, 200, 0.75);
       font-style: italic;
       min-height: 20px;
-      transition: opacity 0.3s;
       letter-spacing: 0.3px;
     }
 
     /* ---- Yes Message ---- */
-    #yes-msg {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
+    #yes-msg { display: none; flex-direction: column; align-items: center; gap: 14px; }
     #yes-msg .big-heart {
       font-size: 80px;
       animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
@@ -211,24 +276,13 @@
       0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
       100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
-    #yes-msg h2 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 28px;
-      font-style: italic;
-      color: #fff;
-    }
-    #yes-msg p {
-      font-size: 14px;
-      color: var(--blush);
-      font-weight: 300;
-      line-height: 1.7;
-    }
+    #yes-msg h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-style: italic; color: #fff; }
+    #yes-msg p  { font-size: 14px; color: var(--blush); font-weight: 300; line-height: 1.7; }
 
     /* ---- Confetti ---- */
     .confetti-piece {
       position: fixed;
-      width: 9px;
-      height: 9px;
+      width: 9px; height: 9px;
       border-radius: 2px;
       pointer-events: none;
       z-index: 100;
@@ -242,6 +296,30 @@
   </style>
 </head>
 <body>
+
+  <!-- Music: keep your music.mp3 in the same folder as this file -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Click-to-start overlay -->
+  <div id="music-hint" onclick="startExperience()">
+    <div class="pulse-heart">❤️</div>
+    <h2>Open with Love</h2>
+    <p>✨ tap anywhere to begin ✨</p>
+  </div>
+
+  <!-- Music player pill -->
+  <div id="music-player">
+    <button id="toggle-music" onclick="toggleMusic()" title="Play / Pause">⏸</button>
+    <div class="music-bars" id="music-bars">
+      <span style="--bd:0.5s"></span>
+      <span style="--bd:0.7s"></span>
+      <span style="--bd:0.4s"></span>
+      <span style="--bd:0.6s"></span>
+    </div>
+    <span class="music-label">playing ♪</span>
+  </div>
 
   <!-- Stars -->
   <div id="stars"></div>
@@ -274,39 +352,73 @@
   </div>
 
   <script>
-    // Stars
+    const audio      = document.getElementById('bgMusic');
+    const hint       = document.getElementById('music-hint');
+    const player     = document.getElementById('music-player');
+    const toggleBtn  = document.getElementById('toggle-music');
+    const bars       = document.getElementById('music-bars');
+    const musicLabel = document.querySelector('.music-label');
+
+    function startExperience() {
+      // Fade out overlay
+      hint.classList.add('hidden');
+      setTimeout(() => { hint.style.display = 'none'; }, 800);
+
+      // Start music with fade-in
+      audio.volume = 0;
+      audio.play().then(() => {
+        player.classList.add('visible');
+        let vol = 0;
+        const fadeIn = setInterval(() => {
+          vol = Math.min(vol + 0.04, 0.75);
+          audio.volume = vol;
+          if (vol >= 0.75) clearInterval(fadeIn);
+        }, 80);
+      }).catch(() => {
+        // If still blocked, show player anyway
+        player.classList.add('visible');
+        toggleBtn.textContent = '▶';
+        bars.classList.add('paused');
+        musicLabel.textContent = 'tap ▶ to play';
+      });
+    }
+
+    function toggleMusic() {
+      if (audio.paused) {
+        audio.play();
+        toggleBtn.textContent = '⏸';
+        bars.classList.remove('paused');
+        musicLabel.textContent = 'playing ♪';
+      } else {
+        audio.pause();
+        toggleBtn.textContent = '▶';
+        bars.classList.add('paused');
+        musicLabel.textContent = 'paused';
+      }
+    }
+
+    // Generate stars
     const starsEl = document.getElementById('stars');
     for (let i = 0; i < 80; i++) {
       const s = document.createElement('div');
       s.className = 'star';
       const size = (Math.random() * 2.5 + 0.8).toFixed(1);
-      s.style.cssText = `
-        width:${size}px;height:${size}px;
-        left:${(Math.random()*100).toFixed(2)}%;
-        top:${(Math.random()*100).toFixed(2)}%;
-        --d:${(Math.random()*3+2).toFixed(1)}s;
-        --dl:-${(Math.random()*5).toFixed(1)}s
-      `;
+      s.style.cssText = `width:${size}px;height:${size}px;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;--d:${(Math.random()*3+2).toFixed(1)}s;--dl:-${(Math.random()*5).toFixed(1)}s`;
       starsEl.appendChild(s);
     }
 
-    // Petals
+    // Generate falling petals
     const petalsEl = document.getElementById('petals');
-    const petalSymbols = ['🌸', '🌹', '❤️', '✨', '🌺', '💗', '❄️'];
+    const petalSymbols = ['🌸','🌹','❤️','✨','🌺','💗','❄️'];
     for (let i = 0; i < 18; i++) {
       const p = document.createElement('div');
       p.className = 'petal';
       p.textContent = petalSymbols[i % petalSymbols.length];
-      p.style.cssText = `
-        left:${(Math.random()*100).toFixed(1)}%;
-        font-size:${Math.floor(Math.random()*14+12)}px;
-        --fd:${(Math.random()*7+6).toFixed(1)}s;
-        --fdl:-${(Math.random()*10).toFixed(1)}s
-      `;
+      p.style.cssText = `left:${(Math.random()*100).toFixed(1)}%;font-size:${Math.floor(Math.random()*14+12)}px;--fd:${(Math.random()*7+6).toFixed(1)}s;--fdl:-${(Math.random()*10).toFixed(1)}s`;
       petalsEl.appendChild(p);
     }
 
-    // No button wiggle messages
+    // No button
     const noMessages = [
       "Are you sure? 😏",
       "Think again, love... 💗",
@@ -318,49 +430,32 @@
     let noCount = 0;
 
     function sayNo() {
-      const msg = document.getElementById('no-msg');
-      msg.textContent = noMessages[Math.min(noCount, noMessages.length - 1)];
+      document.getElementById('no-msg').textContent = noMessages[Math.min(noCount, noMessages.length - 1)];
       noCount++;
-
       const noBtn = document.getElementById('no-btn');
       const dx = (Math.random() - 0.5) * 80;
       const dy = (Math.random() - 0.5) * 50;
-      noBtn.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      noBtn.style.transition = 'transform 0.3s ease';
       noBtn.style.transform = `translate(${dx}px, ${dy}px)`;
-      setTimeout(() => {
-        noBtn.style.transform = 'translate(0,0)';
-      }, 350);
+      setTimeout(() => { noBtn.style.transform = 'translate(0,0)'; }, 350);
     }
 
     function sayYes() {
       document.getElementById('main-content').style.display = 'none';
-      const yesMsg = document.getElementById('yes-msg');
-      yesMsg.style.display = 'flex';
+      document.getElementById('yes-msg').style.display = 'flex';
       spawnConfetti();
     }
 
     function spawnConfetti() {
-      const colors = [
-        '#e8426a','#ff8fab','#ffd6e0',
-        '#c77dff','#f9c74f','#90e0ef',
-        '#ff6b6b','#ffc8dd','#b5e48c'
-      ];
+      const colors = ['#e8426a','#ff8fab','#ffd6e0','#c77dff','#f9c74f','#90e0ef','#ff6b6b','#ffc8dd','#b5e48c'];
       for (let i = 0; i < 70; i++) {
         setTimeout(() => {
           const c = document.createElement('div');
           c.className = 'confetti-piece';
-          const duration = (Math.random() * 1.5 + 2).toFixed(1);
-          c.style.cssText = `
-            left:${(25 + Math.random() * 50).toFixed(1)}%;
-            top:20%;
-            background:${colors[Math.floor(Math.random() * colors.length)]};
-            --cfd:${duration}s;
-            border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
-            animation-delay:${(Math.random() * 0.4).toFixed(2)}s;
-            transform:rotate(${Math.floor(Math.random()*360)}deg)
-          `;
+          const dur = (Math.random() * 1.5 + 2).toFixed(1);
+          c.style.cssText = `left:${(25+Math.random()*50).toFixed(1)}%;top:20%;background:${colors[Math.floor(Math.random()*colors.length)]};--cfd:${dur}s;border-radius:${Math.random()>0.5?'50%':'2px'};animation-delay:${(Math.random()*0.4).toFixed(2)}s;transform:rotate(${Math.floor(Math.random()*360)}deg)`;
           document.body.appendChild(c);
-          setTimeout(() => c.remove(), parseFloat(duration) * 1000 + 500);
+          setTimeout(() => c.remove(), parseFloat(dur) * 1000 + 500);
         }, i * 25);
       }
     }
